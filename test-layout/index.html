@@ -1,0 +1,266 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Layout ESM</title>
+
+<link rel="stylesheet" href="/enyo/css/enyo.css">
+<link rel="stylesheet" href="/layout/css/layout.css">
+<style>
+ body { font: 14px/1.5 system-ui, sans-serif; margin: 2rem; background: #fff; }
+ h1, h2 { font-family: system-ui, sans-serif; }
+ #app { margin: 1rem 0; }
+ .box { border: 1px solid #ccc; }
+ .pad { padding: 8px; }
+ .tint { background: #e8f0fe; }
+ .tint2 { background: #fce8e6; }
+ #log { white-space: pre-wrap; font-family: ui-monospace, monospace; font-size: 13px; color: #444; }
+ #log .f { color: #c5221f; font-weight: bold; }
+</style>
+
+<!--
+	Layout is a separate package from enyo, so every `enyo/src/...` specifier in
+	src/ is a bare specifier and this map is what resolves them. Serve the
+	directory that holds the checkouts:
+
+		python3 test-layout/serve.py 8000 /path/containing/enyo/and/layout
+
+	Use serve.py rather than `python3 -m http.server`: the latter lets the
+	browser cache ES modules, and a query string on this page's URL does not
+	bust them, so a reload can re-run stale code and report a false pass.
+-->
+<script type="importmap">
+{
+	"imports": {
+		"enyo/": "/enyo/",
+		"onyx/": "/onyx/",
+		"layout/": "/layout/"
+	}
+}
+</script>
+</head>
+<body>
+
+<h1>Layout widgets, loaded as ES modules</h1>
+<p>No bundler, no build step: just <code>&lt;script type="module"&gt;</code> and the
+import map above.</p>
+
+<div id="app"></div>
+
+<h2>Checks</h2>
+<div id="log">running…</div>
+
+<!--
+	A module that fails to LINK never runs, so the module script below cannot
+	report its own failure and the page would sit on "running…" looking
+	un-alarming. This classic script always runs, and turns that silence into a
+	visible failure.
+-->
+<script>
+window.addEventListener('error', function (e) {
+	document.title = 'FAIL (load)';
+	document.getElementById('log').innerHTML =
+		'<span class="f">FAIL  the page did not load: ' +
+		String(e.message).replace(/</g, '&lt;') + '</span>';
+});
+setTimeout(function () {
+	if (!window.layoutEsmTest) {
+		document.title = 'FAIL (did not finish)';
+		document.getElementById('log').insertAdjacentHTML('beforeend',
+			'\n<span class="f">FAIL  checks did not finish — see the console</span>');
+	}
+}, 10000);
+</script>
+
+<script type="module">
+import kind    from 'enyo/src/kind.js';
+import Control from 'enyo/src/Control/Control.js';
+import ready   from 'enyo/src/ready.js';
+
+import FittableRows      from 'layout/src/FittableRows.js';
+import FittableColumns   from 'layout/src/FittableColumns.js';
+import FittableLayout    from 'layout/src/FittableLayout/FittableLayout.js';
+import Panels            from 'layout/src/Panels/Panels.js';
+import CardArranger      from 'layout/src/CardArranger.js';
+import CarouselArranger  from 'layout/src/CarouselArranger.js';
+import Arranger          from 'layout/src/Arranger/Arranger.js';
+import FlyweightRepeater from 'layout/src/FlyweightRepeater.js';
+import Slideable         from 'layout/src/Slideable.js';
+import easing            from 'layout/src/easing.js';
+
+const results = [];
+function check (name, pass, detail) {
+	results.push((pass ? 'PASS  ' : 'FAIL  ') + name + (detail ? '  — ' + detail : ''));
+	const el = document.getElementById('log');
+	el.innerHTML = results.map(function (r) {
+		return r.indexOf('FAIL') === 0 ? '<span class="f">' + r + '</span>' : r;
+	}).join('\n');
+	if (!pass) console.error('FAIL: ' + name + (detail ? '  — ' + detail : ''));
+}
+
+// --------------------------------------------------------------- exports ---
+
+// NOT `typeof x === 'function'`: a missing default export is a link-time
+// SyntaxError, so this page would never run and nothing would report. What can
+// fail is an export carrying the wrong value, so the kinds are pinned by name.
+const expectedKinds = [
+	[FittableRows, 'enyo.FittableRows'], [FittableColumns, 'enyo.FittableColumns'],
+	[Panels, 'enyo.Panels'], [CardArranger, 'enyo.CardArranger'],
+	[CarouselArranger, 'enyo.CarouselArranger'], [Arranger, 'enyo.Arranger'],
+	[FlyweightRepeater, 'enyo.FlyweightRepeater'], [Slideable, 'enyo.Slideable']
+];
+const wrongKinds = expectedKinds.filter(function (p) {
+	return typeof p[0] !== 'function' || !p[0].prototype || p[0].prototype.kindName !== p[1];
+}).map(function (p) { return p[1]; });
+check('each default export is its kind constructor', wrongKinds.length === 0,
+	wrongKinds.length ? 'wrong: ' + wrongKinds.join(', ') : expectedKinds.length + ' kinds');
+
+// FittableLayout hangs two kinds off its default export, and onyx reaches for
+// exactly these (FittableLayout.Columns / .Rows). Converting the three
+// module.exports assignments in that file by hand is the step that could have
+// dropped them.
+check('FittableLayout.Columns survived the export conversion',
+	!!FittableLayout.Columns && FittableLayout.Columns.prototype.kindName === 'enyo.FittableColumnsLayout',
+	FittableLayout.Columns && FittableLayout.Columns.prototype.kindName);
+check('FittableLayout.Rows survived the export conversion',
+	!!FittableLayout.Rows && FittableLayout.Rows.prototype.kindName === 'enyo.FittableRowsLayout',
+	FittableLayout.Rows && FittableLayout.Rows.prototype.kindName);
+
+// easing is a namespace object mixed into enyo's, not a kind. It is the only
+// module here whose export is built by utils.mixin, so it is worth checking
+// that the mixin result survived and that enyo's own entries came with it.
+check('easing exports its own functions', typeof easing.easeInQuad === 'function' &&
+	typeof easing.easeInOutQuad === 'function',
+	'easeInQuad=' + typeof easing.easeInQuad);
+check('easing still carries enyo\'s entries through the mixin',
+	typeof easing.cubicBezier === 'function' || typeof easing.linear === 'function',
+	'cubicBezier=' + typeof easing.cubicBezier + ' linear=' + typeof easing.linear);
+// signature is (n, t, b, c, d): c*(t/d)^2 + b, so t=0.5 d=1 c=1 b=0 -> 0.25
+check('easing computes', Math.abs(easing.easeInQuad(null, 0.5, 0, 1, 1) - 0.25) < 1e-9,
+	'easeInQuad(t=0.5)=' + easing.easeInQuad(null, 0.5, 0, 1, 1));
+
+// -------------------------------------------------------------- the widgets ---
+
+let setupCalls = 0, transitionStarts = 0, transitionFinishes = 0;
+
+const Demo = kind({
+	name: 'LayoutEsmDemo',
+	kind: FittableRows,
+	classes: 'box',
+	style: 'height: 220px; width: 420px;',
+	handlers: {
+		onTransitionStart: 'tStart',
+		onTransitionFinish: 'tFinish'
+	},
+	components: [
+		{name: 'header', classes: 'pad tint', content: 'FittableRows header'},
+		{name: 'cols', kind: FittableColumns, fit: true, classes: 'box', components: [
+			{name: 'side', classes: 'pad tint2', style: 'width: 110px;', content: 'fixed'},
+			{name: 'main', fit: true, classes: 'pad', components: [
+				{name: 'panels', kind: Panels, arrangerKind: CardArranger,
+					animate: false, draggable: false, style: 'height: 100px;', components: [
+					{name: 'p0', classes: 'pad', content: 'Panel zero'},
+					{name: 'p1', classes: 'pad', content: 'Panel one'},
+					{name: 'p2', classes: 'pad', content: 'Panel two'}
+				]}
+			]}
+		]},
+		{name: 'rep', kind: FlyweightRepeater, count: 4, onSetupItem: 'setupRow',
+			classes: 'pad', components: [
+			{name: 'rowLabel'}
+		]}
+	],
+	setupRow: function (sender, event) {
+		setupCalls++;
+		this.$.rowLabel.setContent('row ' + event.index);
+		return true;
+	},
+	tStart:  function () { transitionStarts++; },
+	tFinish: function () { transitionFinishes++; }
+});
+
+function styleOf (node, prop) {
+	return getComputedStyle(node).getPropertyValue(prop);
+}
+
+ready(async function () {
+	const d = new Demo();
+	d.renderInto(document.getElementById('app'));
+	check('demo rendered', !!d.hasNode());
+
+	// --- the stylesheet is actually applied ---
+	check('css/layout.css loaded and applied',
+		styleOf(d.$.panels.hasNode(), 'position') === 'relative',
+		'.enyo-panels position=' + styleOf(d.$.panels.hasNode(), 'position'));
+	check('fittable classes on the DOM',
+		d.hasNode().className.indexOf('enyo-fittable-rows-layout') !== -1,
+		d.hasNode().className);
+
+	// --- the layout actually ran: the fit child absorbs the leftover height ---
+	const headerH = d.$.header.hasNode().getBoundingClientRect().height;
+	const colsH   = d.$.cols.hasNode().getBoundingClientRect().height;
+	const repH    = d.$.rep.hasNode().getBoundingClientRect().height;
+	check('FittableRows gave the fit child the remaining height',
+		colsH > 0 && Math.abs((headerH + colsH + repH) - 220) < 4,
+		headerH.toFixed(1) + ' + ' + colsH.toFixed(1) + ' + ' + repH.toFixed(1) + ' vs 220');
+
+	const sideW = d.$.side.hasNode().getBoundingClientRect().width;
+	const mainW = d.$.main.hasNode().getBoundingClientRect().width;
+	check('FittableColumns gave the fit child the remaining width',
+		mainW > 0 && Math.abs(sideW - 110) < 2 && Math.abs((sideW + mainW) - 420) < 6,
+		sideW.toFixed(1) + ' + ' + mainW.toFixed(1) + ' vs 420');
+
+	// --- FlyweightRepeater rendered one row per count, through onSetupItem ---
+	check('FlyweightRepeater called onSetupItem once per row', setupCalls === 4,
+		'calls=' + setupCalls);
+	check('FlyweightRepeater rendered its rows',
+		/row 0/.test(d.$.rep.hasNode().textContent) && /row 3/.test(d.$.rep.hasNode().textContent),
+		JSON.stringify(d.$.rep.hasNode().textContent.slice(0, 40)));
+
+	// --- Panels: the arranger actually arranges ---
+	check('Panels starts on index 0', d.$.panels.get('index') === 0);
+	check('CardArranger shows only the active panel',
+		styleOf(d.$.p0.hasNode(), 'display') !== 'none' &&
+		styleOf(d.$.p1.hasNode(), 'display') === 'none',
+		'p0=' + styleOf(d.$.p0.hasNode(), 'display') + ' p1=' + styleOf(d.$.p1.hasNode(), 'display'));
+
+	d.$.panels.next();
+	check('Panels.next() advanced the index', d.$.panels.get('index') === 1,
+		'index=' + d.$.panels.get('index'));
+	check('the arranger moved the active panel',
+		styleOf(d.$.p1.hasNode(), 'display') !== 'none' &&
+		styleOf(d.$.p0.hasNode(), 'display') === 'none',
+		'p0=' + styleOf(d.$.p0.hasNode(), 'display') + ' p1=' + styleOf(d.$.p1.hasNode(), 'display'));
+	check('Panels fired its transition events', transitionStarts >= 1 && transitionFinishes >= 1,
+		'start=' + transitionStarts + ' finish=' + transitionFinishes);
+
+	d.$.panels.previous();
+	check('Panels.previous() went back', d.$.panels.get('index') === 0,
+		'index=' + d.$.panels.get('index'));
+
+	d.$.panels.setIndex(2);
+	check('setIndex() reached the last panel', d.$.panels.get('index') === 2,
+		'index=' + d.$.panels.get('index'));
+
+	// --- swapping the arranger kind re-lays-out through a different module ---
+	d.$.panels.set('arrangerKind', CarouselArranger);
+	d.$.panels.reflow();
+	check('arrangerKind swap took effect',
+		d.$.panels.layout instanceof CarouselArranger,
+		d.$.panels.layout && d.$.panels.layout.kindName);
+
+	// --- the package root ---
+	const layoutPackage = await import('layout/index.js');
+	check('version named export from index.js', layoutPackage.version === '2.7.0',
+		'version=' + layoutPackage.version);
+
+	const failed = results.filter(function (r) { return r.indexOf('FAIL') === 0; });
+	document.title = failed.length ? 'FAIL (' + failed.length + ')' : 'ALL PASS';
+	window.layoutEsmTest = {results: results, failed: failed.length, total: results.length};
+	console.log(failed.length
+		? 'LAYOUT TESTS FAILED: ' + failed.join(' | ')
+		: 'ALL ' + results.length + ' LAYOUT TESTS PASSED');
+});
+</script>
+</body>
+</html>

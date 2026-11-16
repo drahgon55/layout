@@ -3,21 +3,18 @@
 * @module layout/AroundList
 */
 
-var
-	kind = require('enyo/kind');
+import kind from 'enyo/src/kind.js';
 
-var
-	List = require('./List'),
-	FlyweightRepeater = require('./FlyweightRepeater');
+import List from './List/List.js';
+import FlyweightRepeater from './FlyweightRepeater.js';
 
 /**
 * {@link module:layout/AroundList~AroundList} is a {@link module:layout/List~List}
 * that allows content to be displayed around its rows.
 *
 * ```javascript
-* 	var
-* 		kind = require('enyo/kind'),
-* 		AroundList = require('layout/AroundList');
+* 	import kind from 'enyo/src/kind.js';
+* 	import AroundList from 'layout/src/AroundList.js';
 *
 * 	{kind: AroundList, onSetupItem: 'setupItem',
 * 		aboveComponents: [
@@ -34,7 +31,7 @@ var
 * @ui
 * @public
 */
-module.exports = kind(
+export default kind(
 	/** @lends module:layout/AroundList~AroundList.prototype */ {
 
 	/**

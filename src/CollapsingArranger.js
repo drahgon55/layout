@@ -3,11 +3,9 @@
 * @module layout/CollapsingArranger
 */
 
-var
-	kind = require('enyo/kind');
+import kind from 'enyo/src/kind.js';
 
-var
-	CarouselArranger = require('./CarouselArranger');
+import CarouselArranger from './CarouselArranger.js';
 
 /**
 * {@link module:layout/CollapsingArranger~CollapsingArranger} is a
@@ -32,7 +30,7 @@ var
 * @extends module:enyo/CarouselArranger~CarouselArranger
 * @public
 */
-module.exports = kind(
+export default kind(
 	/** @lends module:layout/CollapsingArranger~CollapsingArranger.prototype */ {
 
 	/**

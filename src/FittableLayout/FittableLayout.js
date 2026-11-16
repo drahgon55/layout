@@ -4,11 +4,10 @@
 * @module layout/FittableLayout
 */
 
-var
-	kind = require('enyo/kind'),
-	dom = require('enyo/dom'),
-	Control = require('enyo/Control'),
-	Layout = require('enyo/Layout');
+import kind from 'enyo/src/kind.js';
+import dom from 'enyo/src/dom.js';
+import Control from 'enyo/src/Control/Control.js';
+import Layout from 'enyo/src/Layout.js';
 
 var detector = document.createElement('div'),
 	flexAvailable =
@@ -57,7 +56,7 @@ var detector = document.createElement('div'),
 * @extends module:enyo/Layout~Layout
 * @public
 */
-var FittableLayout = module.exports = kind(/** @lends module:layout/FittableLayout~FittableLayout.prototype */{
+var FittableLayout = kind(/** @lends module:layout/FittableLayout~FittableLayout.prototype */{
 	name: 'enyo.FittableLayout',
 
 	/**
@@ -322,7 +321,7 @@ var FittableLayout = module.exports = kind(/** @lends module:layout/FittableLayo
 /**
 * The declaration for {@link module:layout/FittableLayout~FittableColumnsLayout}
 */
-module.exports.Columns = kind(/** @lends module:layout/FittableLayout~FittableColumnsLayout.prototype */{
+FittableLayout.Columns = kind(/** @lends module:layout/FittableLayout~FittableColumnsLayout.prototype */{
 	name        : 'enyo.FittableColumnsLayout',
 	kind        : FittableLayout,
 	orient      : 'h',
@@ -353,7 +352,7 @@ module.exports.Columns = kind(/** @lends module:layout/FittableLayout~FittableCo
 /**
 * The declaration for {@link module:layout/FittableLayout~FittableRowsLayout}
 */
-module.exports.Rows = kind(
+FittableLayout.Rows = kind(
 	/** @lends module:layout/FittableLayout~FittableRowsLayout.prototype */ {
 
 	/**
@@ -389,3 +388,5 @@ module.exports.Rows = kind(
 	*/
 	flexLayoutClass: 'enyo-flex-container rows'
 });
+
+export default FittableLayout;

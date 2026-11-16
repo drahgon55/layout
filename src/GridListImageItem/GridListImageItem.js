@@ -3,11 +3,10 @@
 * @module layout/GridListImageItem
 */
 
-var
-	kind = require('enyo/kind'),
-	Control = require('enyo/Control'),
-	Img = require('enyo/Image'),
-	EmptyBinding = require('enyo/EmptyBinding');
+import kind from 'enyo/src/kind.js';
+import Control from 'enyo/src/Control/Control.js';
+import Img from 'enyo/src/Image/Image.js';
+import EmptyBinding from 'enyo/src/EmptyBinding.js';
 
 /**
 * {@link module:layout/GridListImageItem~GridListImageItem} is a convenience component that may be used inside
@@ -19,7 +18,7 @@ var
 * @ui
 * @public
 */
-module.exports = kind(
+export default kind(
 	/** @lends module:layout/GridListImageItem~GridListImageItem.prototype */ {
 
 	/**

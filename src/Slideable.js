@@ -3,12 +3,11 @@
 * @module layout/Slideable
 */
 
-var
-	kind = require('enyo/kind'),
-	dom = require('enyo/dom'),
-	platform = require('enyo/platform'),
-	Animator = require('enyo/Animator'),
-	Control = require('enyo/Control');
+import kind from 'enyo/src/kind.js';
+import dom from 'enyo/src/dom.js';
+import platform from 'enyo/src/platform.js';
+import Animator from 'enyo/src/Animator.js';
+import Control from 'enyo/src/Control/Control.js';
 
 /**
 * Fires when the Slideable finishes animating.
@@ -49,9 +48,8 @@ var
 * to its natural position:
 *
 * ```javascript
-* 	var
-* 		kind = require('enyo/kind'),
-* 		Slideable = require('layout/Slideable');
+* 	import kind from 'enyo/src/kind.js';
+* 	import Slideable from 'layout/src/Slideable.js';
 *
 * 	{kind: Slideable, value: -90, min: -90, unit: '%',
 * 		classes: 'enyo-fit', style: 'width: 300px;',
@@ -78,7 +76,7 @@ var
 * @ui
 * @public
 */
-module.exports = kind(
+export default kind(
 	/** @lends module:layout/Slideable~Slideable.prototype */ {
 
 	/**

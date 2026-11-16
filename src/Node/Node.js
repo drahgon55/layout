@@ -3,10 +3,9 @@
 * @module layout/Node
 */
 
-var
-	kind = require('enyo/kind'),
-	Control = require('enyo/Control'),
-	Img = require('enyo/Image');
+import kind from 'enyo/src/kind.js';
+import Control from 'enyo/src/Control/Control.js';
+import Img from 'enyo/src/Image/Image.js';
 
 /**
 * Fires when the Node is tapped. No additional data is sent with this event.
@@ -48,9 +47,8 @@ var
 * component hierarchy format, e.g.:
 *
 * ```javascript
-* 	var
-* 		kind = require('enyo/kind'),
-* 		Node = require('layout/Node');
+* 	import kind from 'enyo/src/kind.js';
+* 	import Node from 'layout/src/Node/Node.js';
 *
 * 	{kind: Node, icon: '@../assets/folder-open.png', content: 'Tree',
 * 		expandable: true, expanded: true, components: [
@@ -83,7 +81,7 @@ var
 * @ui
 * @public
 */
-var TreeNode = module.exports = kind(
+var TreeNode = kind(
 	/** @lends module:layout/Node~Node.prototype */ {
 
 	/**
@@ -432,3 +430,5 @@ var TreeNode = module.exports = kind(
 });
 
 TreeNode.prototype.defaultKind = TreeNode;
+
+export default TreeNode;

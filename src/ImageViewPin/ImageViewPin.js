@@ -3,9 +3,8 @@
 * @module layout/ImageViewPin
 */
 
-var
-	kind = require('enyo/kind'),
-	Control = require('enyo/Control');
+import kind from 'enyo/src/kind.js';
+import Control from 'enyo/src/Control/Control.js';
 
 /**
 * {@link module:layout/ImageViewPin~ImageViewPin} is a control that can be used to display
@@ -20,7 +19,7 @@ var
 * @ui
 * @public
 */
-module.exports = kind(
+export default kind(
 	/** @lends module:layout/ImageViewPin~ImageViewPin.prototype */ {
 
 	/**

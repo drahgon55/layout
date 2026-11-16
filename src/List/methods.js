@@ -1,10 +1,9 @@
-var
-	animation = require('enyo/animation'),
-	dom = require('enyo/dom'),
-	kind = require('enyo/kind'),
-	logger = require('enyo/logger'),
-	platform = require('enyo/platform'),
-	utils = require('enyo/utils');
+import animation from 'enyo/src/animation.js';
+import dom from 'enyo/src/dom.js';
+import kind from 'enyo/src/kind.js';
+import logger from 'enyo/src/logger.js';
+import platform from 'enyo/src/platform.js';
+import utils from 'enyo/src/utils.js';
 
 /**
 * layout/List was too large for the parser so we have to split it up. For now, we're arbitrarily
@@ -13,7 +12,7 @@ var
 * @private
 */
 
-module.exports = /** @lends module:layout/List~List.prototype */ {
+export default /** @lends module:layout/List~List.prototype */ {
 	/**
 	* @method
 	* @private

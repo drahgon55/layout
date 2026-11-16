@@ -3,10 +3,9 @@
 * @module layout/AlphaJumper
 */
 
-var
-	kind = require('enyo/kind'),
-	dispatcher = require('enyo/dispatcher'),
-	Control = require('enyo/Control');
+import kind from 'enyo/src/kind.js';
+import dispatcher from 'enyo/src/dispatcher.js';
+import Control from 'enyo/src/Control/Control.js';
 
 /**
 * Fires when a letter is selected.
@@ -28,7 +27,7 @@ var
 * @ui
 * @public
 */
-module.exports = kind(
+export default kind(
 	/** @lends module:layout/AlphaJumper~AlphaJumper.prototype */ {
 
 	/**

@@ -3,12 +3,11 @@
 * @module layout/PanZoomView
 */
 
-var
-	kind = require('enyo/kind'),
-	dom = require('enyo/dom'),
-	utils = require('enyo/utils'),
-	Animator = require('enyo/Animator'),
-	Scroller = require('enyo/Scroller');
+import kind from 'enyo/src/kind.js';
+import dom from 'enyo/src/dom.js';
+import utils from 'enyo/src/utils.js';
+import Animator from 'enyo/src/Animator.js';
+import Scroller from 'enyo/src/Scroller/Scroller.js';
 
 /**
 * Fires whenever the user adjusts the zoom via double-tap/double-click, mousewheel,
@@ -37,9 +36,8 @@ var
 * support it).
 *
 * ```javascript
-* 	var
-* 		kind = require('enyo/kind'),
-* 		PanZoomView = require('layout/PanZoomView');
+* 	import kind from 'enyo/src/kind.js';
+* 	import PanZoomView from 'layout/src/PanZoomView.js';
 *
 * 	{kind: PanZoomView, scale: 'auto', contentWidth: 500, contentHeight: 500,
 * 		style: 'width: 500px; height: 400px;',
@@ -66,7 +64,7 @@ var
 * @ui
 * @public
 */
-module.exports = kind(
+export default kind(
 	/** @lends module:layout/PanZoomView~PanZoomView.prototype */ {
 
 	/**

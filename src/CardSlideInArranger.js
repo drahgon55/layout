@@ -3,12 +3,10 @@
 * @module layout/CardSlideInArranger
 */
 
-var
-	kind = require('enyo/kind');
+import kind from 'enyo/src/kind.js';
 
-var
-	Arranger = require('./Arranger'),
-	CardArranger = require('./CardArranger');
+import Arranger from './Arranger/Arranger.js';
+import CardArranger from './CardArranger.js';
 
 /**
 * {@link module:layout/CardSlideInArranger~CardSlideInArranger} is a
@@ -29,7 +27,7 @@ var
 * @extends module:layout/CardArranger~CardArranger
 * @public
 */
-module.exports = kind(
+export default kind(
 	/** @lends module:layout/CardSlideInArranger~CardSlideInArranger.prototype */ {
 
 	/**

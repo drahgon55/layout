@@ -3,12 +3,10 @@
 * @module layout/FittableRows
 */
 
-var
-	kind = require('enyo/kind')	;
+import kind from 'enyo/src/kind.js';
 
-var
-	FittableLayout = require('./FittableLayout'),
-	FittableRowsLayout = FittableLayout.Rows;
+import FittableLayout from './FittableLayout/FittableLayout.js';
+var FittableRowsLayout = FittableLayout.Rows;
 
 /**
 * {@link module:layout/FittableRows~FittableRows} provides a container in which items are laid out in a
@@ -25,7 +23,7 @@ var
 * @ui
 * @public
 */
-module.exports = kind(/** @lends module:layout/FittableRows~FittableRows.prototype */{
+export default kind(/** @lends module:layout/FittableRows~FittableRows.prototype */{
 
 	/**
 	* @private

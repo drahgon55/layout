@@ -3,16 +3,13 @@
 * @module layout/List
 */
 
-var
-	kind = require('enyo/kind'),
-	utils = require('enyo/utils'),
-	Scroller = require('enyo/Scroller');
+import kind from 'enyo/src/kind.js';
+import utils from 'enyo/src/utils.js';
+import Scroller from 'enyo/src/Scroller/Scroller.js';
 
-var
-	FlyweightRepeater = require('layout/FlyweightRepeater');
+import FlyweightRepeater from '../FlyweightRepeater.js';
 
-var
-	methods = require('./methods');
+import methods from './methods.js';
 
 /**
 * A collection of useful metrics about a page.
@@ -126,7 +123,7 @@ var
 * @ui
 * @public
 */
-module.exports = kind(utils.mixin(methods,
+export default kind(utils.mixin(methods,
 	/** @lends module:layout/List~List.prototype */ {
 
 	/**

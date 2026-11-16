@@ -3,14 +3,12 @@
 * @module layout/Arranger
 */
 
-var
-	kind = require('enyo/kind'),
-	utils = require('enyo/utils'),
-	platform = require('enyo/platform');
+import kind from 'enyo/src/kind.js';
+import utils from 'enyo/src/utils.js';
+import platform from 'enyo/src/platform.js';
 
-var
-	Layout = require('enyo/Layout'),
-	Dom = require('enyo/dom');
+import Layout from 'enyo/src/Layout.js';
+import Dom from 'enyo/src/dom.js';
 
 /**
 * {@link module:layout/Arranger~Arranger} is an {@link module:enyo/Layout~Layout} that considers one of the
@@ -33,7 +31,7 @@ var
 * @extends module:enyo/Layout~Layout
 * @public
 */
-var Arranger = module.exports = kind(
+var Arranger = kind(
 	/** @lends module:layout/Arranger~Arranger.prototype */ {
 
 	/**
@@ -401,3 +399,5 @@ Arranger.opacifyControl = function (inControl, inOpacity) {
 	// blink so cap this here.
 	inControl.applyStyle('opacity', inOpacity > 0.99 ? 1 : (inOpacity < 0.01 ? 0 : inOpacity));
 };
+
+export default Arranger;

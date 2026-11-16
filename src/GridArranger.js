@@ -3,11 +3,9 @@
 * @module layout/GridArranger
 */
 
-var
-	kind = require('enyo/kind');
+import kind from 'enyo/src/kind.js';
 
-var
-	Arranger = require('./Arranger');
+import Arranger from './Arranger/Arranger.js';
 
 /**
 * {@link module:layout/GridArranger~GridArranger} is a
@@ -26,7 +24,7 @@ var
 * @extends module:layout/Arranger~Arranger
 * @public
 */
-module.exports = kind(
+export default kind(
 	/** @lends module:layout/GridArranger~GridArranger.prototype */ {
 
 	/**

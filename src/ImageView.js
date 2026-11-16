@@ -3,15 +3,13 @@
 * @module layout/ImageView
 */
 
-var
-	kind = require('enyo/kind'),
-	dom = require('enyo/dom'),
-	logger = require('enyo/logger'),
-	platform = require('enyo/platform'),
-	Img = require('enyo/Image');
+import kind from 'enyo/src/kind.js';
+import dom from 'enyo/src/dom.js';
+import logger from 'enyo/src/logger.js';
+import platform from 'enyo/src/platform.js';
+import Img from 'enyo/src/Image/Image.js';
 
-var
-	PanZoomView = require('./PanZoomView');
+import PanZoomView from './PanZoomView.js';
 
 /**
 * {@link module:layout/ImageView~ImageView} is a control that displays an image
@@ -20,9 +18,8 @@ var
 * that support it).
 *
 * ```javascript
-* 	var
-* 		kind = require('enyo/kind'),
-* 		ImageView = require('layout/ImageView');
+* 	import kind from 'enyo/src/kind.js';
+* 	import ImageView from 'layout/src/ImageView.js';
 *
 * 	{kind: ImageView, src: '@../assets/globe.jpg', scale: 'auto',
 * 		style: 'width: 500px; height: 400px;'}
@@ -44,7 +41,7 @@ var
 * @ui
 * @public
 */
-module.exports = kind(
+export default kind(
 	/** @lends module:layout/ImageView~ImageView.prototype */ {
 
 	/**

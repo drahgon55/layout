@@ -3,12 +3,10 @@
 * @module layout/FittableHeaderLayout
 */
 
-var
-	kind = require('enyo/kind');
+import kind from 'enyo/src/kind.js';
 
-var
-	FittableLayout = require('./FittableLayout'),
-	FittableColumnsLayout = FittableLayout.Columns;
+import FittableLayout from './FittableLayout/FittableLayout.js';
+var FittableColumnsLayout = FittableLayout.Columns;
 
 /**
 * {@link module:layout/FittableHeaderLayout~FittableHeaderLayout} extends {@link module:layout/FittableLayout~FittableColumnsLayout},
@@ -24,7 +22,7 @@ var
 * @extends module:layout/FittableColumnsLayout~FittableColumnsLayout
 * @public
 */
-module.exports = kind(/** @lends module:layout/FittableHeaderLayout~FittableHeaderLayout.prototype */{
+export default kind(/** @lends module:layout/FittableHeaderLayout~FittableHeaderLayout.prototype */{
 
 	/**
 	* @private

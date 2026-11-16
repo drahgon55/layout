@@ -3,16 +3,14 @@
 * @module layout/Panels
 */
 
-var
-	kind = require('enyo/kind'),
-	dispatcher = require('enyo/dispatcher'),
-	dom = require('enyo/dom'),
-	platform = require('enyo/platform'),
-	utils = require('enyo/utils'),
-	Animator = require('enyo/Animator');
+import kind from 'enyo/src/kind.js';
+import dispatcher from 'enyo/src/dispatcher.js';
+import dom from 'enyo/src/dom.js';
+import platform from 'enyo/src/platform.js';
+import utils from 'enyo/src/utils.js';
+import Animator from 'enyo/src/Animator.js';
 
-var
-	CardArranger = require('../CardArranger');
+import CardArranger from '../CardArranger.js';
 
 /**
 * Fires at the start of a panel transition, when [setIndex()]{@link module:layout/Panels~Panels#setIndex}
@@ -58,7 +56,7 @@ var
 * @ui
 * @public
 */
-var Panels = module.exports = kind(
+var Panels = kind(
 	/** @lends module:layout/Panels~Panels.prototype */ {
 
 	/**
@@ -933,3 +931,5 @@ var Panels = module.exports = kind(
 		}
 	}
 });
+
+export default Panels;

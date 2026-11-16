@@ -3,16 +3,14 @@
 * @module layout/PulldownList
 */
 
-var
-	dom = require('enyo/dom'),
-	kind = require('enyo/kind'),
-	platform = require('enyo/platform'),
-	TouchScrollStrategy = require('enyo/TouchScrollStrategy'),
-	TranslateScrollStrategy = require('enyo/TranslateScrollStrategy');
+import dom from 'enyo/src/dom.js';
+import kind from 'enyo/src/kind.js';
+import platform from 'enyo/src/platform.js';
+import TouchScrollStrategy from 'enyo/src/TouchScrollStrategy.js';
+import TranslateScrollStrategy from 'enyo/src/TranslateScrollStrategy.js';
 
-var
-	List = require('../List'),
-	Puller = require('./Puller');
+import List from '../List/List.js';
+import Puller from './Puller.js';
 
 /**
 * Fires when user initiates a pull action. No additional data is included with
@@ -73,9 +71,8 @@ var
 * with the new data.
 *
 * ```javascript
-* 	var
-* 		kind = require('enyo/kind'),
-* 		PulldownList = require('layout/PulldownList');
+* 	import kind from 'enyo/src/kind.js';
+* 	import PulldownList from 'layout/src/PulldownList/PulldownList.js';
 *
 * 	{name: 'list', kind: PulldownList, onSetupItem: 'setupItem',
 * 		onPullRelease: 'pullRelease', onPullComplete: 'pullComplete',
@@ -102,7 +99,7 @@ var
 * @ui
 * @public
 */
-module.exports = kind(
+var PulldownList = kind(
 	/** @lends module:layout/PulldownList~PulldownList.prototype */ {
 
 	/**
@@ -419,4 +416,6 @@ module.exports = kind(
 * The {@link module:layout/PulldownList/Puller~Puller} declaration used by the PulldownList.
 * @public
 */
-module.exports.Puller = Puller;
+PulldownList.Puller = Puller;
+
+export default PulldownList;

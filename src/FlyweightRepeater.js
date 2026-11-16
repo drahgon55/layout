@@ -3,13 +3,12 @@
 * @module layout/FlyweightRepeater
 */
 
-var
-	kind = require('enyo/kind'),
-	dom = require('enyo/dom'),
-	utils = require('enyo/utils'),
-	Control = require('enyo/Control'),
-	HTMLStringDelegate = require('enyo/HTMLStringDelegate'),
-	Selection = require('enyo/Selection');
+import kind from 'enyo/src/kind.js';
+import dom from 'enyo/src/dom.js';
+import utils from 'enyo/src/utils.js';
+import Control from 'enyo/src/Control/Control.js';
+import HTMLStringDelegate from 'enyo/src/HTMLStringDelegate.js';
+import Selection from 'enyo/src/Selection.js';
 
 var FlyweightRepeaterDelegate = Object.create(HTMLStringDelegate);
 
@@ -80,7 +79,7 @@ FlyweightRepeaterDelegate.generateInnerHtml = function (control) {
 * @ui
 * @public
 */
-var FlyweightRepeater = module.exports = kind(
+var FlyweightRepeater = kind(
 	/** @lends module:layout/FlyweightRepeater~FlyweightRepeater.prototype */ {
 
 	/**
@@ -496,3 +495,5 @@ var FlyweightRepeater = module.exports = kind(
 		}
 	}
 });
+
+export default FlyweightRepeater;

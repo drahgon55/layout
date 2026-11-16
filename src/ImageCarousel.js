@@ -3,14 +3,12 @@
 * @module layout/ImageCarousel
 */
 
-var
-	kind = require('enyo/kind'),
-	utils = require('enyo/utils');
+import kind from 'enyo/src/kind.js';
+import utils from 'enyo/src/utils.js';
 
-var
-	ImageView = require('./ImageView'),
-	Panels = require('./Panels'),
-	CarouselArranger = require('./CarouselArranger');
+import ImageView from './ImageView.js';
+import Panels from './Panels/Panels.js';
+import CarouselArranger from './CarouselArranger.js';
 
 /**
 * {@link module:layout/ImageCarousel~ImageCarousel} is a
@@ -20,9 +18,8 @@ var
 * {@link module:layout/ImageView~ImageView} as needed, creating a gallery of images.
 *
 * ```javascript
-* 	var
-* 		kind = require('enyo/kind'),
-* 		ImageCarousel = require('layout/ImageCarousel');
+* 	import kind from 'enyo/src/kind.js';
+* 	import ImageCarousel from 'layout/src/ImageCarousel.js';
 *
 * 	{kind: ImageCarousel, images: [
 * 		'@../assets/mercury.jpg',
@@ -56,7 +53,7 @@ var
 * @ui
 * @public
 */
-module.exports = kind(
+export default kind(
 	/** @lends module:layout/ImageCarousel~ImageCarousel.prototype */ {
 
 	/**

@@ -4,9 +4,8 @@
 * @module layout/PulldownList/Puller
 */
 
-var
-	kind = require('enyo/kind'),
-	Control = require('enyo/Control');
+import kind from 'enyo/src/kind.js';
+import Control from 'enyo/src/Control/Control.js';
 
 /**
 * Fires when the Puller is created.
@@ -26,7 +25,7 @@ var
 * @ui
 * @public
 */
-module.exports = kind(
+export default kind(
 	/** @lends module:layout/PulldownList/Puller~Puller.prototype */ {
 
 	/**

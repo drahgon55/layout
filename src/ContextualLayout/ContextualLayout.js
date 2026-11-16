@@ -3,9 +3,8 @@
 * @module layout/ContextualLayout
 */
 
-var
-    kind = require('enyo/kind'),
-    Layout = require('enyo/Layout');
+import kind from 'enyo/src/kind.js';
+import Layout from 'enyo/src/Layout.js';
 
 /**
 * {@link module:layout/ContextualLayout~ContextualLayout} provides the base
@@ -14,12 +13,11 @@ var
 * popup is positioned relative to the activator, e.g.:
 *
 * ```javascript
-* 	var
-* 		kind = require('enyo/kind'),
-* 		ContextualPopup = require('onyx/ContextualPopup'),
-* 		ContextualPopupDecorator = require('onyx/ContextualPopupDecorator');
+* 	import kind from 'enyo/src/kind.js';
+* 	import ContextualPopup from 'onyx/src/ContextualPopup/ContextualPopup.js';
+* 	import MenuDecorator from 'onyx/src/MenuDecorator.js';
 *
-* 	{kind: ContextualPopupDecorator, components: [
+* 	{kind: MenuDecorator, components: [
 * 		{content: 'Show Popup'},
 * 		{kind: ContextualPopup,
 * 			title: 'Sample Popup',
@@ -37,7 +35,7 @@ var
 * The decorator contains the popup and activator, with the activator being the
 * first child component (i.e., the "Show Popup" button). The contextual layout
 * strategy is applied because, in the definition of `onyx/ContextualPopup`,
-* its `layoutKind` property is set to `onyx/ContextualLayout`.
+* its `layoutKind` property is set to `layout/ContextualLayout`.
 *
 * Note that a popup using ContextualLayout as its `layoutKind` is expected to
 * declare several specific properties:
@@ -62,7 +60,7 @@ var
 * @public
 */
 
-module.exports = kind(
+export default kind(
     /** @lends module:layout/ContextualLayout~ContextualLayout.prototype */ {
 
     /**

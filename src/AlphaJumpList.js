@@ -3,12 +3,10 @@
 * @module layout/AlphaJumpList
 */
 
-var
-	kind = require('enyo/kind');
+import kind from 'enyo/src/kind.js';
 
-var
-	AlphaJumper = require('./AlphaJumper'),
-	List = require('./List');
+import AlphaJumper from './AlphaJumper/AlphaJumper.js';
+import List from './List/List.js';
 
 /**
 * {@link module:layout/AlphaJumpList~AlphaJumpList} is a
@@ -17,10 +15,9 @@ var
 * selected.
 *
 * ```javascript
-* 	var
-* 		kind = require('enyo/kind'),
-* 		AlphaJumpList = require('layout/AlphaJumpList'),
-* 		Item = require('onyx/Item');
+* 	import kind from 'enyo/src/kind.js';
+* 	import AlphaJumpList from 'layout/src/AlphaJumpList.js';
+* 	import Item from 'onyx/src/Item/Item.js';
 *
 * 	{kind: AlphaJumpList, onSetupItem: 'setupItem',
 * 		onAlphaJump: 'alphaJump',
@@ -36,7 +33,7 @@ var
 * @extends module:layout/List~List
 * @public
 */
-module.exports = kind(
+export default kind(
 	/** @lends module:layout/AlphaJumpList~AlphaJumpList.prototype */ {
 
 	/**

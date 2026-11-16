@@ -3,11 +3,9 @@
 * @module layout/LeftRightArranger
 */
 
-var
-	kind = require('enyo/kind');
+import kind from 'enyo/src/kind.js';
 
-var
-	Arranger = require('./Arranger');
+import Arranger from './Arranger/Arranger.js';
 
 /**
 * {@link module:layout/LeftRightArranger~LeftRightArranger} is a
@@ -27,7 +25,7 @@ var
 * @extends module:layout/Arranger~Arranger
 * @public
 */
-module.exports = kind(
+export default kind(
 	/** @lends module:layout/LeftRightArranger~LeftRightArranger.prototype */ {
 
 	/**

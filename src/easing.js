@@ -1,6 +1,5 @@
-var
-    animation = require('enyo/animation'),
-    utils = require('enyo/utils');
+import animation from 'enyo/src/animation.js';
+import utils from 'enyo/src/utils.js';
 
 /**
 * Provides static methods for easing calculations.
@@ -12,7 +11,7 @@ var
 * @todo verify all these methods need to be documented
 */
 
-var easing = module.exports = utils.mixin(animation.easing, /** @lends module:layout/easing */ {
+var easing = utils.mixin(animation.easing, /** @lends module:layout/easing */ {
 
     /**
     * @type {Number}
@@ -336,3 +335,5 @@ TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF TH
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
+
+export default easing;

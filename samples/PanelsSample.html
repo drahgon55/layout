@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<title>Panels Sample</title>
+
+<!-- The 2.5 original pulled in enyo.js and three package.js files and let them
+     gather their own stylesheets. There is no loader here, so the sheets this
+     sample actually uses are listed by hand: layout and onyx are complete
+     compiled sheets committed to the forks, while enyo ships only its base and
+     each enyo module we touch brings its own. -->
+<link rel="stylesheet" href="/enyo/css/enyo.css">
+<link rel="stylesheet" href="/enyo/src/Scroller/Scroller.css">
+<link rel="stylesheet" href="/enyo/src/ScrollThumb/ScrollThumb.css">
+<link rel="stylesheet" href="/enyo/src/ToolDecorator/ToolDecorator.css">
+<link rel="stylesheet" href="/enyo/src/Popup/Popup.css">
+<link rel="stylesheet" href="/enyo/src/Scrim/Scrim.css">
+<link rel="stylesheet" href="/layout/css/layout.css">
+<link rel="stylesheet" href="/onyx/css/onyx.css">
+<link rel="stylesheet" href="PanelsSample.css">
+
+<!--
+	No bundler and no build step: the libraries are ES modules and the browser
+	resolves their bare specifiers through this map. It needs the `enyo`,
+	`layout` and `onyx` checkouts to sit side by side under the served root, so
+	serve their common parent:
+
+		python3 test-layout/serve.py 8000 /path/containing/enyo/layout/onyx
+
+	then open http://localhost:8000/layout/samples/PanelsSample.html
+
+	Use serve.py rather than `python3 -m http.server`: the latter lets the
+	browser cache ES modules, so a reload can re-run stale code.
+-->
+<script type="importmap">
+{ "imports": {
+  "enyo":    "/enyo/index.js",
+  "enyo/":   "/enyo/",
+  "layout":  "/layout/index.js",
+  "layout/": "/layout/",
+  "onyx":    "/onyx/index.js",
+  "onyx/":   "/onyx/"
+} }
+</script>
+</head>
+<!-- `onyx` scopes onyx's own typography rules; the original sample pages got it
+     the same way. -->
+<body class="onyx enyo-unselectable">
+
+<!-- A module that fails to LINK never runs, so the module script below could
+     not report its own failure and the page would just sit there blank. This
+     classic script turns that silence into something visible. -->
+<script>
+window.addEventListener('error', function (e) {
+	document.title = 'FAIL (load)';
+	document.body.insertAdjacentHTML('afterbegin',
+		'<pre style="color:#c5221f;font:14px/1.4 ui-monospace,monospace">' +
+		'the page did not load: ' + String(e.message).replace(/</g, '&lt;') + '</pre>');
+});
+</script>
+
+<script type="module">
+import ready from 'enyo/src/ready.js';
+import PanelsSample from './PanelsSample.js';
+
+ready(function () {
+	new PanelsSample().renderInto(document.body);
+});
+</script>
+</body>
+</html>

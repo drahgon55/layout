@@ -71,7 +71,12 @@ export default kind({
 			{kind: Scroller, thumb: false, fit: true, touch: true, vertical: 'hidden', style: 'margin: 0;', components: [
 				{classes: 'onyx-toolbar-inline', style: 'white-space: nowrap;', components: [
 					{kind: MenuDecorator, components: [
-						{content: 'Arranger'},
+						// The activator doubles as the readout: `create` below
+						// labels it with the arranger in force, and
+						// `arrangerSelected` relabels it on every pick.
+						// Upstream left it reading 'Arranger' forever, so the
+						// only way to tell which one you had was to try it.
+						{name: 'arrangerButton', content: 'Arranger'},
 						{name: 'arrangerPicker', kind: Menu, maxHeight: 360, floating: true, onSelect: 'arrangerSelected'}
 					]},
 					{kind: Button, content: 'Previous', ontap: 'prevPanel'},
@@ -146,8 +151,26 @@ export default kind({
 				});
 			}
 			this.panelCount = this.$.samplePanels.getPanels().length;
+			this.showCurrentArranger();
 		};
 	}),
+
+	/**
+	* Labels the picker with the arranger the panels are actually using. Read
+	* from the panels rather than assumed, so it cannot drift from whatever
+	* Panels defaults `arrangerKind` to.
+	*
+	* @private
+	*/
+	showCurrentArranger: function () {
+		var kind = this.$.samplePanels.arrangerKind;
+		for (var i = 0; i < this.panelArrangers.length; i++) {
+			if (this.panelArrangers[i].arrangerKind === kind) {
+				this.$.arrangerButton.setContent(this.panelArrangers[i].name);
+				return;
+			}
+		}
+	},
 
 	/**
 	* @private
@@ -165,6 +188,7 @@ export default kind({
 			this.currentClass = p.classes;
 		}
 		sp.setArrangerKind(p.arrangerKind);
+		this.$.arrangerButton.setContent(p.name);
 		if (Panels.isScreenNarrow()) {
 			// The original called `this.setIndex(1)`, which does not exist on
 			// this kind -- the index belongs to the panels.

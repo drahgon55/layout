@@ -52,6 +52,12 @@ Three further changes in `PanelsSample`, each noted in a comment where it sits:
 - **`colHeight`/`colWidth` on the `GridArranger` subkind are numbers**, not the
   strings `'150'`. `GridArranger` documents them as Number and does arithmetic
   with them.
+- **The picker button names the arranger in force.** Upstream's read
+  `Arranger` forever, so the only way to tell which one you had was to try it —
+  a poor trade in the one sample whose whole job is telling the arrangers
+  apart. It is labelled from the panels' own `arrangerKind` at create time, so
+  it starts out right whatever `Panels` defaults to, and relabelled on each
+  pick.
 
 The go-to-index box also coerces its value and ignores an empty box, which
 otherwise reached `setIndex` as `NaN`.
